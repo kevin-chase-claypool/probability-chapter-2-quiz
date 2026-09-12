@@ -3,55 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chapter 2 Probability Quiz</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+  <title>Study Quiz Library</title>
   <style>
     :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
     body { margin: 0; background: Canvas; color: CanvasText; }
-    main { max-width: 720px; margin: auto; padding: 1.25rem; }
-    h1 { font-size: 1.65rem; margin-bottom: .2rem; }
-    .muted { opacity: .78; } .panel { border: 1px solid color-mix(in srgb, CanvasText 25%, transparent); border-radius: 14px; padding: 1.1rem; margin-top: 1rem; }
-    .choice { display: flex; gap: .75rem; align-items: center; border: 1px solid color-mix(in srgb, CanvasText 25%, transparent); border-radius: 10px; padding: .85rem; margin: .65rem 0; font-size: 1.05rem; }
-    input { inline-size: 1.25rem; block-size: 1.25rem; } button { font: inherit; padding: .75rem 1rem; border-radius: 9px; border: 1px solid CanvasText; background: ButtonFace; color: ButtonText; margin-top: .5rem; } button.primary { background: #1769e0; color: white; border-color: #1769e0; } button[hidden], #feedback[hidden], #done[hidden] { display: none; }
-    .correct { color: #178142; } .wrong { color: #c63131; } progress { inline-size: 100%; block-size: .8rem; } .formula { font-family: ui-monospace, monospace; font-size: .95rem; }
+    main { max-width: 760px; margin: auto; padding: 1.25rem; }
+    h1 { font-size: 1.7rem; margin-bottom: .25rem; }
+    .muted { opacity: .75; } .list { margin-top: 1.5rem; border-top: 1px solid color-mix(in srgb, CanvasText 25%, transparent); }
+    .folder { display: block; padding: 1rem .25rem; color: inherit; text-decoration: none; border-bottom: 1px solid color-mix(in srgb, CanvasText 25%, transparent); }
+    .folder:focus, .folder:hover { background: color-mix(in srgb, CanvasText 8%, transparent); outline: none; }
+    .name { display: block; font-size: 1.1rem; font-weight: 650; } .detail { display: block; margin-top: .25rem; opacity: .75; }
   </style>
 </head>
 <body>
   <main>
-    <h1>Chapter 2: Probability Quiz</h1>
-    <p class="muted">Answer one question at a time. Submit to see a full explanation whether you are right or wrong.</p>
-    <progress id="bar" value="0" max="14"></progress>
-    <p id="meta" class="muted" aria-live="polite"></p>
-    <section id="quiz" class="panel">
-      <p id="topic" class="muted"></p><h2 id="prompt"></h2>
-      <form id="form"><div id="choices"></div><p id="warning" class="wrong" hidden></p><button class="primary" id="submit" type="submit">Submit answer</button><button id="next" type="button" hidden>Next question</button></form>
-      <div id="feedback" aria-live="polite"></div>
-    </section>
-    <section id="done" class="panel"><h2>Complete</h2><p id="score"></p><div id="focus" aria-live="polite"></div><button class="primary" id="restart" type="button">Start again</button></section>
+    <h1>Study Quiz Library</h1>
+    <p class="muted">Choose a topic to practice. Each quiz gives immediate explanations and a focused review summary.</p>
+    <nav class="list" aria-label="Available quizzes">
+      <a class="folder" href="chapter-2-probability/">
+        <span class="name">📁 Chapter 2: Basic Concepts of Probability</span>
+        <span class="detail">14 questions · sample spaces, events, probability rules, conditional probability, independence, and sequential experiments</span>
+      </a>
+    </nav>
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script>
-  <script>
-    const qs = [
-      ['Sample spaces','Two callers each can be silent (S) or speaking (Sp). If identities are recorded, how many outcomes are possible?',['2','3','4','8'],[2],'There are four ordered-pair outcomes: (S,S), (S,Sp), (Sp,S), and (Sp,Sp). Each caller contributes two possibilities, so 2 × 2 = 4.'],
-      ['Events','For the count-only sample space S = {0, 1, 2}, which event means “at least one caller speaks”?',['{0}','{1}','{1, 2}','{0, 1, 2}'],[2], 'Counts 1 and 2 satisfy “at least one.” The set is {1, 2}.'],
-      ['Complements','If S = {1, 2, 3, 4} and A = {2, 4}, what is Aᶜ?',['{2, 4}','{1, 3}','{1, 2, 3, 4}','∅'],[1], 'A complement contains the sample-space outcomes excluded from A: {1, 3}.'],
-      ['Axioms','What is P(S), the probability of the entire sample space?',['0','1/2','1','It depends'],[2], 'P(S) = 1 because one and only one outcome from the complete sample space occurs.'],
-      ['Addition rule','A and B cannot occur together. If P(A) = 0.30 and P(B) = 0.45, find P(A ∪ B).',['0.15','0.30','0.45','0.75'],[3], 'Disjoint events do not overlap, so add: P(A ∪ B) = 0.30 + 0.45 = 0.75.'],
-      ['Addition rule','P(A) = 0.60, P(B) = 0.50, and P(A ∩ B) = 0.20. Find P(A ∪ B).',['0.30','0.70','0.90','1.10'],[2], 'Subtract the overlap once: 0.60 + 0.50 − 0.20 = 0.90. Without subtraction, the shared outcomes would be counted twice.'],
-      ['Counting','A fair die is rolled. What is P(even and greater than 3)?',['1/6','1/3','1/2','2/3'],[1], 'The outcomes satisfying both conditions are {4, 6}. Thus P = 2/6 = 1/3.'],
-      ['Conditional probability','A fair die is rolled. Given the outcome is greater than 3, what is P(even | greater than 3)?',['1/6','1/3','1/2','2/3'],[3], '“Given greater than 3” restricts the outcomes to {4, 5, 6}. Two of those three outcomes are even, so the answer is 2/3.'],
-      ['Conditional probability','If P(A ∩ B) = 0.18 and P(B) = 0.30, what is P(A | B)?',['0.12','0.30','0.48','0.60'],[3], 'Use \\(P(A\\mid B)=\\frac{P(A\\cap B)}{P(B)}\\). Therefore \\(P(A\\mid B)=\\frac{0.18}{0.30}=0.60\\).'],
-      ['Independence','A and B are independent. P(A) = 0.40 and P(B) = 0.50. What is P(A ∩ B)?',['0.20','0.40','0.50','0.90'],[0], 'For independent events, multiply: \\(P(A\\cap B)=P(A)P(B)=0.40\\times0.50=0.20\\).'],
-      ['Independence','Select all statements that must be true when A and B are independent.',['P(A | B) = P(A), if P(B) > 0','P(A ∩ B) = P(A)P(B)','A and B cannot occur together','Learning B occurred does not change P(A)'],[0,1,3], 'Independence means knowledge of B does not change the probability of A. Independent events may still occur together, so statement 3 is false.'],
-      ['Sequential experiments','A bag has 3 red and 2 blue balls. Two are drawn without replacement. Find P(red on both draws).',['1/4','3/10','2/5','9/25'],[1], '\\(P(\\text{first red})=\\frac35\\). After removing one red ball, \\(P(\\text{second red}\\mid\\text{first red})=\\frac24\\). Multiply: \\(\\frac35\\cdot\\frac24=\\frac3{10}\\).'],
-      ['Sequential experiments','Using the same bag, two balls are drawn with replacement. Find P(red on both draws).',['3/10','2/5','9/25','3/5'],[2], 'Replacement restores the original 3 red out of 5 total before draw two. Multiply: (3/5)(3/5) = 9/25.'],
-      ['Randomness','Why can a long run of random trials show a stable relative frequency even though each individual outcome is unpredictable?',['Every outcome eventually occurs equally often','Statistical regularity makes relative frequencies settle near model probabilities','The experiment stops being random','The sample space gets smaller'],[1], 'Chapter 1’s backbone idea is statistical regularity: over many repetitions, relative frequency tends to stabilize near the underlying probability.']
-    ];
-    let i=0, score=0, topics={}; const $=id=>document.getElementById(id);
-    function draw(){ const q=qs[i], multi=q[3].length>1; $('meta').textContent=`Question ${i+1} of ${qs.length}`; $('bar').value=i; $('topic').textContent=q[0]+(multi?' · Select all that apply':''); $('prompt').textContent=q[1]; $('choices').innerHTML=q[2].map((x,n)=>`<label class="choice"><input type="${multi?'checkbox':'radio'}" name="answer" value="${n}"><span>${String.fromCharCode(65+n)}. ${x}</span></label>`).join(''); $('feedback').hidden=true; $('feedback').innerHTML=''; $('warning').hidden=true; $('submit').hidden=false; $('next').hidden=true; }
-    $('form').onsubmit=e=>{e.preventDefault(); let q=qs[i], picked=[...document.querySelectorAll('input:checked')].map(x=>+x.value).sort((a,b)=>a-b); if(!picked.length){$('warning').textContent='Select at least one answer before submitting.';$('warning').hidden=false;return;} let ok=picked.length===q[3].length&&picked.every((x,n)=>x===q[3][n]); topics[q[0]]??={correct:0,total:0}; topics[q[0]].total++; if(ok){score++;topics[q[0]].correct++;} document.querySelectorAll('input').forEach(x=>x.disabled=true); $('feedback').innerHTML=`<hr><p class="${ok?'correct':'wrong'}"><strong>${ok?'Correct.':'Not quite.'}</strong></p><p>${q[4]}</p>`; if(window.renderMathInElement)renderMathInElement($('feedback'),{delimiters:[{left:'\\(',right:'\\)',display:false}],throwOnError:false}); $('feedback').hidden=false; $('submit').hidden=true; $('next').hidden=false; };
-    $('next').onclick=()=>{i++;if(i<qs.length)draw();else{$('quiz').hidden=true;$('done').hidden=false;$('bar').value=qs.length;$('meta').textContent='Quiz complete';$('score').textContent=`You answered ${score} of ${qs.length} correctly.`;let weak=Object.entries(topics).filter(([,v])=>v.correct<v.total).sort((a,b)=>(a[1].correct/a[1].total)-(b[1].correct/b[1].total));$('focus').innerHTML=weak.length?`<h3>Focus your review</h3><p>Review these topics first:</p><ul>${weak.map(([name,v])=>`<li><strong>${name}</strong>: ${v.correct} of ${v.total} correct</li>`).join('')}</ul><p>Restart the quiz after reviewing the explanations for each missed question.</p>`:`<h3>Strong result</h3><p>You answered every question correctly. Restart the quiz later and explain each answer aloud to reinforce the ideas.</p>`;}}; $('restart').onclick=()=>{i=0;score=0;topics={};$('done').hidden=true;$('quiz').hidden=false;draw()}; draw();
-  </script>
 </body>
 </html>
